@@ -39,7 +39,7 @@ class Tierupdate extends CI_Controller {
 			$_POST['zones'] = $_POST['cell'];
 			unset($_POST['cell']);
 			curl_setopt_array($curl, array(
-			  CURLOPT_URL => "http://100.2.150.31/api/v3/team/".$_POST['team']."/tiers",
+			  CURLOPT_URL => "http://".$this->config->item('api_server')."/api/v3/team/".$_POST['team']."/tiers",
 			  CURLOPT_RETURNTRANSFER => true,
 			  CURLOPT_ENCODING => "",
 			  CURLOPT_MAXREDIRS => 10,

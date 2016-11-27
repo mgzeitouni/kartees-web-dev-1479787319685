@@ -55,6 +55,7 @@ $app->add(new \TokenAuth());
  */
 $app->get('/season/team/{id}', '\season:getGames');
 $app->get('/season/package/{id}', '\season:getGamesByPackage');
+$app->post('/season/import/{sport}/{team}', '\season:importFromPython');
 
 /**
  *=======================================

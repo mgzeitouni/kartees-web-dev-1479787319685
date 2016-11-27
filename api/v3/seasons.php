@@ -117,5 +117,83 @@ class season{
         
         return $opponent." at ".$home."<div class='message'>".$this->message."</div>";
     }
+    
+    public function importFromPython($request, $response, $args){
+        $teams = new team;
+        $curl = curl_init();
+        $team = ($args['team']);
+        $sport = $args['sport'];
+        
+        if(!isset($team) || !isset($sport))
+            die("Please enter sport and team names");
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "http://stubhub-python-dev.mybluemix.net/get-team-games?teamName=".urlencode($team),
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "content-type: application/json",
+                "token: {{Login_token}}"
+              ),
+            ));
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+				
+				//print_r($response);
+            curl_close($curl);
+
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+                $team_names = $teams->getNameBySport(null, null, ['sport' =>$sport], true);
+                foreach($team_names as $team_id=>$team_name){
+                    $full_name[$team_id] = $team_name['city']." ".$team_name['team_name']; 
+                }
+                
+                $response = json_decode($response, true);
+                
+                foreach($response['opponents'] as &$opponents){
+                    $opponents = array_search($opponents, $full_name);
+                }
+                
+                foreach($response['dates'] as $id=>$date){
+                    $fdate = new DateTime($date);
+                    $date = $fdate->format('Y-m-d');
+                    $hteam = array_search($team, $full_name);
+                    $opp = $response['opponents'][$id];
+                    $games[]= array('Event_Id' => "$id",
+                                    'Game_Date_Time' => $date,
+                                    'Home_Team' => "$hteam",
+                                    'Opponent' => "$opp",
+                                    'game_value' => "");
+                }
+                
+                $new_season = array(
+                    'season_year' => $fdate->format('Y'),
+                    'sport' => $sport,
+                    'games' => $games
+                );
+                
+                $this->newSeason($new_season);
+            }
+    }
+    
+    private function newSeason($data){
+        global $database;
+        if($database->has("season", ['games.0.Home_Team' => $data['games'][0]['Home_Team'], "season_year" => $data['season_year']])){
+            if($return = $database->update("season", $data, ['games.0.Home_Team' => $data['games'][0]['Home_Team'], "season_year" => $data['season_year']]))
+                echo "{\"message\":\"Update Successful, ".count($data['games'])." games updated\"}";
+        }
+        else {
+            if($return = $database->insert("season", $data, null))
+                echo "{\"message\":\"Insert Successful, ".count($data['games'])." games inserted\"}";
+        }
+    }
 
 }

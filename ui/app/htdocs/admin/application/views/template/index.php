@@ -37,6 +37,7 @@
                     <li class="selected"><a href="index.html"><i class="fa fa-bullseye"></i> Dashboard</a></li>
                     <li><a href="<?= $this->config->item('base_url') ?>tierupdate"><i class="fa fa-tasks"></i>New Tier</a></li>
                     <li><a href="<?= $this->config->item('base_url') ?>tierupdate/link"><i class="fa fa-tasks"></i>Link Tier To Game</a></li>
+                    <li><a href="<?= $this->config->item('base_url') ?>import"><i class="fa fa-tasks"></i>Update Seasons</a></li>
 
                     <li><a href="signup.html"><i class="fa fa-list-ol"></i> SignUp</a></li>
                     <li><a href="register.html"><i class="fa fa-font"></i> Register</a></li>

@@ -60,7 +60,7 @@
           }
         });
         
-        xhr.open("GET", "http://100.2.150.31/api/v3/teamName/sport/"+sport);
+        xhr.open("GET", "http://<?= $this->config->item('base_url') ?>/api/v3/teamName/sport/"+sport);
         xhr.setRequestHeader("token", "login_2@cbbdce707de9aaa471540e508b53eb1d");
         xhr.setRequestHeader("cache-control", "no-cache");
         

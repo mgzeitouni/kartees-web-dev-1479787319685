@@ -54,7 +54,7 @@
           }
         });
         
-        xhr.open("GET", "https://kartees-api.mybluemix.net/api/v3/teamName/sport/"+sport);
+        xhr.open("GET", "https://<?= $this->config->item('base_url') ?>/api/v3/teamName/sport/"+sport);
         xhr.setRequestHeader("token", "@9920353502fc425250a3a826b78e2751");
         xhr.setRequestHeader("cache-control", "no-cache");
         

@@ -57,7 +57,7 @@
           }
         });
         
-        xhr.open("GET", "http://100.2.150.31/api/v3/teamName/sport/"+sport);
+        xhr.open("GET", "http://<?= $this->config->item('api_server') ?>/api/v3/teamName/sport/"+sport);
         xhr.setRequestHeader("token", "login_2@cbbdce707de9aaa471540e508b53eb1d");
         xhr.setRequestHeader("cache-control", "no-cache");
         
@@ -91,7 +91,7 @@
               
             });
             
-            xhr.open("GET", "http://100.2.150.31/api/v3/team/"+team+"/game_values");
+            xhr.open("GET", "http://<?= $this->config->item('api_server') ?>/api/v3/team/"+team+"/game_values");
             xhr.setRequestHeader("token", "login_2@cbbdce707de9aaa471540e508b53eb1d");
             xhr.setRequestHeader("cache-control", "no-cache");
             
@@ -113,7 +113,7 @@
               }
             });
             
-            xhr.open("PUT", "http://100.2.150.31/api/v3/event/"+name+"/"+value);
+            xhr.open("PUT", "http://<?= $this->config->item('api_server') ?>/api/v3/event/"+name+"/"+value);
             xhr.setRequestHeader("token", "login_2@cbbdce707de9aaa471540e508b53eb1d");
             xhr.setRequestHeader("content-type", "application/json");
             xhr.setRequestHeader("cache-control", "no-cache");

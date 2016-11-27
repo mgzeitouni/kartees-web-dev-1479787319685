@@ -234,6 +234,8 @@ class database{
         }
     }
     
+
+    
     public function delete($table, $where){
         $docs = $this->get($table, "_id, _rev", $where);
         //print_r($docs);
