@@ -1,5 +1,6 @@
 {
     "require": {
-        "tuupola/slim-basic-auth": "^2.0"
+        "tuupola/slim-basic-auth": "^2.0",
+         "ext-mysqli": "*"
     }
 }
